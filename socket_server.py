@@ -1,24 +1,19 @@
 import socket
 
-
-s = socket.socket()
-
+sock = socket.socket()
 print "Socket created ..."
 
-
-port = 1516
-
-s.bind(('', port))
-
-s.listen(5)
+port = 1500
+sock.bind(('', port))
+sock.listen(5)
 
 print 'socket is listening'
 
-
 while True:
-    c, addr = s.accept()
+    c, addr = sock.accept()
     print 'got connection from ', addr
 
-    c.send('Thank you for connect to me!')
+    jsonReceived = c.recv(1024)
+    print "Json received -->", jsonReceived
 
     c.close()

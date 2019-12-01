@@ -1,23 +1,26 @@
-
-
 import socket
 import sys
+import json
 
+
+jsonResult = {"first":"You're", "second":"Awsome!"}
+jsonResult = json.dumps(jsonResult)
 try:
-    s = socket.socket(socket.AF_INET)
+    sock = socket.socket()
 except socket.error as err:
     print 'Socket error because of %s' %(err)
 
-port = 80
+port = 1500
+address = "localhost"
 
 try:
-    host_ip = socket.gethostbyname('www.google.com')
+    sock.connect((address, port))
+    sock.send(jsonResult)
 except socket.gaierror:
 
     print 'There an error resolving the host'
 
     sys.exit() 
         
-s.connect((host_ip,port))
-print 'The socket was succesfully connected with google \
-on port == %s' %(host_ip)
+print jsonResult, 'was sent!'
+sock.close()
